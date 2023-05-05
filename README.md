@@ -1,8 +1,8 @@
-# Freebie-EpicGames-Checker Discord Bot
+# 🆓 Freebie-EpicGames-Checker Discord Bot
 
 This Discord bot checks for new free games in Epic Games and sends notifications to subscribed channels.
 
-## Getting Started
+## 🚀 Getting Started
 
 To use this bot, you will need to do the following:
 
@@ -12,13 +12,18 @@ To use this bot, you will need to do the following:
 4. Create a new file called `.env` in the project root directory and add the following line to it: `TOKEN=<your_bot_token>`
 5. Run the bot: `python main.py`
 
-## Features
+## ✨ Features
 
 - Sends an embedded message with the details of new free games in Epic Games.
 - Automatically sends notifications to subscribed channels when new free games become available.
 - Allows users to subscribe to notifications by setting a channel where the bot will send free game notifications.
 
-## Commands
+## 📜 Commands
 
 - `/set_channel` - This sets the notification channel
 - `/now` - This shows the current free games
+
+## 📝 License
+
+Copyright © 2021 [Avneesh Agarwal](https://github.com/hope61). <br />
+This project is [MIT](https://github.com/hope61/Freebie-epicgames-checker/blob/master/LICENSE)licensed.
