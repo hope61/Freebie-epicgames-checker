@@ -26,4 +26,4 @@ To use this bot, you will need to do the following:
 ## 📝 License
 
 Copyright © 2021 [Avneesh Agarwal](https://github.com/hope61). <br />
-This project is [MIT](https://github.com/hope61/Freebie-epicgames-checker/blob/master/LICENSE)licensed.
+This project is [MIT](https://github.com/hope61/Freebie-epicgames-checker/blob/master/LICENSE) licensed.
