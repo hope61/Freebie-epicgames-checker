@@ -4,6 +4,7 @@ import discord
 from discord.ext import tasks, commands
 import asyncio
 import aiosqlite
+from datetime import datetime as datetimeutc
 import datetime
 import dotenv
 import sys
@@ -28,6 +29,8 @@ def run_bot():
     intents = discord.Intents.default()
     intents.members = True
     bot = discord.Bot()
+
+    bot.launch_time = datetimeutc.utcnow()
 
     # Define a list to keep track of the games that have already been sent
     sent_games = []
@@ -90,10 +93,25 @@ def run_bot():
             except Exception as e:
                     print(f"Error in clear_sent_games: {e}")
 
+    @tasks.loop(seconds=1) # repeat after every 1 seconds
+    async def stats():
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print('Logged in as')
+        print(bot.user.name)
+        print(bot.user.id)
+        print(f"Bot status: {bot.status}")
+        print(f"Number of servers: {len(bot.guilds)}")
+        print(f"Number of users: {len(bot.users)}")
+        #Up time
+        delta_uptime = datetimeutc.utcnow() - bot.launch_time
+        hours, remainder = divmod(int(delta_uptime.total_seconds()), 3600)
+        minutes, seconds = divmod(remainder, 60)
+        days, hours = divmod(hours, 24)
+        print(f"Uptime: {days}d {hours}h {minutes}m {seconds}s")
+
     @bot.event
     async def on_ready():
-        # This function is called when the bot is ready to run
-        print(f"{bot.user} is ready and online!")
+        stats.start()
         await db_create() # Create the database if it does not exist
         await check_guilds_in_db() # Check for new guilds and add them to the database
         bot.loop.create_task(clear_sent_games()) # Create a task to clear the sent_games list
@@ -156,26 +174,6 @@ def run_bot():
         else:
             # If there are no free games available, respond with a message indicating this
             await ctx.respond("No free games available at the moment.")
-
-    # This command clears all data from the main table in the database
-    @bot.slash_command()
-    async def clear_db(ctx):
-        # Check if the command is invoked by an admin
-        if not ctx.author.guild_permissions.administrator:
-            await ctx.respond("You don't have permission to use this command.")
-            return
-
-        # Open a connection to the database
-        async with aiosqlite.connect('main.db') as db:
-            # Execute the SQL command to delete all rows from the main table
-            await db.execute("DELETE FROM main")
-
-            # Commit the changes to the database
-            await db.commit()
-
-        # Respond with a message indicating that all data has been cleared
-        await ctx.respond("All data in the main database has been cleared.")
-
 
     # Run the bot
     bot.run(TOKEN)
