@@ -1,3 +1,5 @@
 /.env
 /main.db
 /__pycache__
+/epicgamesbot
+/core/__pycache__
